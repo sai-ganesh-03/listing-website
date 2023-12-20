@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  # Node.js application service
+  listing-app:
+    image: saiganesh03/listing-app
+    ports:
+      - "3000:3000" # Map container port to host
+    environment:
+      - MONGO_DB_HOST=mymongodb # Use the service name defined for MongoDB
+      - MONGO_DB_PORT=27017
+      - MONGO_DB_NAME=wanderlust # Set the database name to wanderlust
+    depends_on:
+      - mongodb # Specify dependency on MongoDB service
+
+  # MongoDB service
+  mongodb:
+    container_name: mymongodb
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=wanderlust # Set the initial database name to wanderlust
+    ports:
+      - "27017:27017" # Map container port to host
